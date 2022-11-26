@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import Book from "./Book";
+import BookShelf from "./BookShelf";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -106,36 +107,9 @@ function App() {
           </div>
           <div className="list-books-content">
             <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {books.filter(name => name.status === 'currentlyReading' ).map((book) => {
-                      return (<Book book={book}/>)
-                    })}
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Want to Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                  {books.filter(name => name.status === 'wantToRead' ).map((book) => {
-                      return (<Book book={book}/>)
-                    })}
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                  {books.filter(name => name.status === 'read' ).map((book) => {
-                      return (<Book book={book}/>)
-                    })}
-                  </ol>
-                </div>
-              </div>
+              <BookShelf title='Currently Reading' books={books.filter(name => name.status === 'currentlyReading')}/>
+              <BookShelf title='Want to Read' books={books.filter(name => name.status === 'wantToRead')}/>
+              <BookShelf title='Read' books={books.filter(name => name.status === 'read')}/>
             </div>
           </div>
           <div className="open-search">
