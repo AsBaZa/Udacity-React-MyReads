@@ -21,6 +21,7 @@ function App() {
       if (selectedBook.id !== book.id) {
         return selectedBook;
       } else {
+        BooksAPI.update(selectedBook, shelf);
         return {
           ...selectedBook,
           shelf: shelf,
