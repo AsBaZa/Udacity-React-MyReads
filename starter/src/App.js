@@ -94,7 +94,7 @@ function App() {
   const [selectedBooks, setSelectedBooks] = useState(books);
 
   const onShelf = (book, shelf) => {
-    const newSelectedBooks = selectedBooks.map(selectedBook => {
+    const newSelectedBooks = selectedBooks.map((selectedBook) => {
       if (selectedBook.pk !== book.pk) {
         return selectedBook;
       } else {
