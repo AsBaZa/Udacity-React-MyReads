@@ -10,10 +10,16 @@ const BookShelf = ({ title, shelf, books, onShelf }) => {
       <h2 className="bookshelf-title">{title}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {books
-            .map((book) => {
-              return <Book key={book.id} book={book} shelf={shelf} onShelf={handleOnShelf}/>;
-            })}
+          {books.map((book) => {
+            return (
+              <Book
+                key={book.id}
+                book={book}
+                shelf={shelf}
+                onShelf={handleOnShelf}
+              />
+            );
+          })}
         </ol>
       </div>
     </div>
