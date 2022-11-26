@@ -1,106 +1,29 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookShelf from "./BookShelf";
-
-const books = [
-  {
-    pk: 0,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    image: {
-      width: 128,
-      height: 193,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
-    },
-    status: "currentlyReading",
-  },
-  {
-    pk: 1,
-    title: "Ender's Game",
-    author: "Orson Scott Card",
-    image: {
-      width: 128,
-      height: 188,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
-    },
-    status: "currentlyReading",
-  },
-  {
-    pk: 2,
-    title: "1776",
-    author: "David McCullough",
-    image: {
-      width: 128,
-      height: 193,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api")',
-    },
-    status: "wantToRead",
-  },
-  {
-    pk: 3,
-    title: "Harry Potter and the Sorcerer's Stone",
-    author: "J.K. Rowling",
-    image: {
-      width: 128,
-      height: 192,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72G3gA5A-Ka8XjOZGDFLAoUeMQBqZ9y-LCspZ2dzJTugcOcJ4C7FP0tDA8s1h9f480ISXuvYhA_ZpdvRArUL-mZyD4WW7CHyEqHYq9D3kGnrZCNiqxSRhry8TiFDCMWP61ujflB&source=gbs_api")',
-    },
-    status: "wantToRead",
-  },
-  {
-    pk: 4,
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
-    image: {
-      width: 128,
-      height: 192,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=pD6arNyKyi8C&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE70Rw0CCwNZh0SsYpQTkMbvz23npqWeUoJvVbi_gXla2m2ie_ReMWPl0xoU8Quy9fk0Zhb3szmwe8cTe4k7DAbfQ45FEzr9T7Lk0XhVpEPBvwUAztOBJ6Y0QPZylo4VbB7K5iRSk&source=gbs_api")',
-    },
-    status: "read",
-  },
-  {
-    pk: 5,
-    title: "Oh, the Places You'll Go!",
-    author: "Seuss",
-    image: {
-      width: 128,
-      height: 174,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=1q_xAwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE712CA0cBYP8VKbEcIVEuFJRdX1k30rjLM29Y-dw_qU1urEZ2cQ42La3Jkw6KmzMmXIoLTr50SWTpw6VOGq1leINsnTdLc_S5a5sn9Hao2t5YT7Ax1RqtQDiPNHIyXP46Rrw3aL8&source=gbs_api")',
-    },
-    status: "read",
-  },
-  {
-    pk: 6,
-    title: "The Adventures of Tom Sawyer",
-    author: "Mark Twain",
-    image: {
-      width: 128,
-      height: 192,
-      backgroundImage:
-        'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")',
-    },
-    status: "read",
-  },
-];
+import * as BooksAPI from "./BooksAPI";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
-  const [selectedBooks, setSelectedBooks] = useState(books);
+  const [selectedBooks, setSelectedBooks] = useState([]);
+  
+  useEffect(() => {
+    const getSelectedBooks = async () => {
+      const resp = await BooksAPI.getAll();
+      setSelectedBooks(resp);
+    };
+
+    getSelectedBooks();
+  }, []);
 
   const onShelf = (book, shelf) => {
     const newSelectedBooks = selectedBooks.map((selectedBook) => {
-      if (selectedBook.pk !== book.pk) {
+      if (selectedBook.id !== book.id) {
         return selectedBook;
       } else {
         return {
           ...selectedBook,
-          status: shelf,
+          shelf: shelf,
         };
       }
     });
@@ -139,22 +62,24 @@ function App() {
             <div>
               <BookShelf
                 title="Currently Reading"
-                status="currentlyReading"
+                shelf="currentlyReading"
                 books={selectedBooks.filter(
-                  (name) => name.status === "currentlyReading"
+                  (name) => name.shelf === "currentlyReading"
                 )}
                 onShelf={onShelf}
               />
               <BookShelf
                 title="Want to Read"
-                status="wantToRead"
-                books={selectedBooks.filter((name) => name.status === "wantToRead")}
+                shelf="wantToRead"
+                books={selectedBooks.filter(
+                  (name) => name.shelf === "wantToRead"
+                )}
                 onShelf={onShelf}
               />
               <BookShelf
                 title="Read"
-                status="read"
-                books={selectedBooks.filter((name) => name.status === "read")}
+                shelf="read"
+                books={selectedBooks.filter((name) => name.shelf === "read")}
                 onShelf={onShelf}
               />
             </div>

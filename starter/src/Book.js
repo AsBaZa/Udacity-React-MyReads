@@ -1,6 +1,6 @@
 import BookShelfChanger from "./BookShelfChanger";
 
-const Book = ({ book, status, onShelf }) => {
+const Book = ({ book, shelf, onShelf }) => {
   const handleOnShelf = (shelf) => {
     onShelf(book, shelf);
   };
@@ -9,11 +9,19 @@ const Book = ({ book, status, onShelf }) => {
     <li>
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={book.image}></div>
-          <BookShelfChanger status={status} onShelf={handleOnShelf}/>
+          {/* TODO: solucionar el ratio de la imagen */}
+          <div className="book-cover" style={{
+                  width: 128,
+                  height: 188,
+                  backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+          }}></div>
+          <BookShelfChanger shelf={shelf} onShelf={handleOnShelf}/>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.author}</div>
+        {/* TODO: solucionar los `key` */}
+        {book.authors.map((author) => 
+          <div key={Math.random().toString(36)} className="book-authors">{author}</div>
+        )}
       </div>
     </li>
   );

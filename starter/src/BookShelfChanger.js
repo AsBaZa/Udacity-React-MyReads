@@ -1,4 +1,4 @@
-const BookShelfChanger = ({ status, onShelf }) => {
+const BookShelfChanger = ({ shelf, onShelf }) => {
   const handleChange = (event) => {
     event.preventDefault();
     onShelf(event.target.value);
@@ -6,7 +6,7 @@ const BookShelfChanger = ({ status, onShelf }) => {
 
   return (
     <div className="book-shelf-changer">
-      <select onChange={handleChange} defaultValue={status}>
+      <select onChange={handleChange} defaultValue={shelf}>
         <option value="none" disabled>
           Move to...
         </option>
