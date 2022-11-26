@@ -1,12 +1,12 @@
 import "./App.css";
 import { useState } from "react";
-import Book from "./Book";
 import BookShelf from "./BookShelf";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
   const books = [
     {
+      pk: 1,
       title: "To Kill a Mockingbird",
       author: "Harper Lee",
       image: {
@@ -17,6 +17,7 @@ function App() {
       status: 'currentlyReading'
     },
     {
+      pk: 2,
       title: "Ender's Game",
       author: "Orson Scott Card",
       image: {
@@ -27,6 +28,7 @@ function App() {
       status: 'currentlyReading'   
     },
     {
+      pk: 3,
       title: "1776",
       author: "David McCullough",
       image: {
@@ -37,6 +39,7 @@ function App() {
       status: 'wantToRead'
     },
     {
+      pk: 4,
       title: "Harry Potter and the Sorcerer's Stone",
       author: "J.K. Rowling",
       image: {
@@ -47,6 +50,7 @@ function App() {
       status: 'wantToRead'
     },
     {
+      pk: 5,
       title: "The Hobbit",
       author: "J.R.R. Tolkien",
       image: {
@@ -57,6 +61,7 @@ function App() {
       status: 'read'
     },
     {
+      pk: 6,
       title: "Oh, the Places You'll Go!",
       author: "Seuss",
       image: {
@@ -67,6 +72,7 @@ function App() {
       status: 'read'
     },
     {
+      pk: 7,
       title: "The Adventures of Tom Sawyer",
       author: "Mark Twain",
       image: {
@@ -107,9 +113,9 @@ function App() {
           </div>
           <div className="list-books-content">
             <div>
-              <BookShelf title='Currently Reading' books={books.filter(name => name.status === 'currentlyReading')}/>
-              <BookShelf title='Want to Read' books={books.filter(name => name.status === 'wantToRead')}/>
-              <BookShelf title='Read' books={books.filter(name => name.status === 'read')}/>
+              <BookShelf title='Currently Reading' status='currentlyReading' books={books.filter(name => name.status === 'currentlyReading')}/>
+              <BookShelf title='Want to Read' status='wantToRead' books={books.filter(name => name.status === 'wantToRead')}/>
+              <BookShelf title='Read' status='read' books={books.filter(name => name.status === 'read')}/>
             </div>
           </div>
           <div className="open-search">
