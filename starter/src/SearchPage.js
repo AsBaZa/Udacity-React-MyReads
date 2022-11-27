@@ -9,7 +9,8 @@ const SearchPage = ({ selectedBooks, handleOnShelf }) => {
   const handleSearchChange = (event) => {
     event.preventDefault();
     const text = event.target.value;
-    if (text.length >= 3) {
+    console.log(text);
+    if (text.length >= 1) {
       BooksAPI.search(text, 20).then((response) => {
         const cleanResponse = response.map((r) => {
           for (let book of selectedBooks) {
@@ -23,6 +24,8 @@ const SearchPage = ({ selectedBooks, handleOnShelf }) => {
           ? setSearchedBooks(cleanResponse)
           : setSearchedBooks([]);
       });
+    } else {
+      setSearchedBooks([]);
     }
   };
 
