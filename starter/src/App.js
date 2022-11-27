@@ -39,7 +39,15 @@ function App() {
     const text = event.target.value;
     if (text.length >= 3) {
       BooksAPI.search(text, 20).then((response) => {
-        response.length > 0 ? setSearchedBooks(response) : setSearchedBooks([]);
+        const cleanResponse = response.map((r) => {
+          for (let book of selectedBooks) {
+            if (r.id === book.id){
+              r.shelf = book.shelf;
+            }
+          }
+          return r
+        })        
+        response.length > 0 ? setSearchedBooks(cleanResponse) : setSearchedBooks([]);
       });
     }
   };
