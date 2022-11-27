@@ -39,8 +39,6 @@ function App() {
     const text = event.target.value;
     if (text.length >= 3) {
       BooksAPI.search(text, 20).then((response) => {
-        // TODO: eliminar `console.log`
-        console.log(response);
         response.length > 0 ? setSearchedBooks(response) : setSearchedBooks([]);
       });
     }
@@ -81,16 +79,15 @@ function App() {
                             backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
                           }}
                         ></div>
-                        {/* <BookShelfChanger shelf={book.shelf} onShelf={handleOnShelf} /> */}
+                        <BookShelfChanger
+                          shelf={book.shelf}
+                          onShelf={() => {}}
+                        />
                       </div>
                       <div className="book-title">{book.title}</div>
-                      {/* TODO: solucionar los `key` */}
                       {Array.isArray(book.authors) &&
                         book.authors.map((author) => (
-                          <div
-                            key={Math.random().toString(36)}
-                            className="book-authors"
-                          >
+                          <div key={author} className="book-authors">
                             {author}
                           </div>
                         ))}

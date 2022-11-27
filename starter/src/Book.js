@@ -21,9 +21,8 @@ const Book = ({ book, shelf, onShelf }) => {
           <BookShelfChanger shelf={shelf} onShelf={handleOnShelf} />
         </div>
         <div className="book-title">{book.title}</div>
-        {/* TODO: solucionar los `key` */}
         {book.authors.map((author) => (
-          <div key={Math.random().toString(36)} className="book-authors">
+          <div key={author} className="book-authors">
             {author}
           </div>
         ))}
