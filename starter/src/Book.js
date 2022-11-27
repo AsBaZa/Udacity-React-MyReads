@@ -5,6 +5,11 @@ const Book = ({ book, shelf, onShelf }) => {
     onShelf(book, shelf);
   };
 
+  const backgroundImage =
+    book.imageLinks !== undefined
+      ? `url(${book.imageLinks.smallThumbnail})`
+      : "white";
+
   return (
     <li>
       <div className="book">
@@ -15,7 +20,7 @@ const Book = ({ book, shelf, onShelf }) => {
             style={{
               width: 128,
               height: 188,
-              backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
+              backgroundImage: backgroundImage,
             }}
           ></div>
           <BookShelfChanger shelf={shelf} book={book} onShelf={handleOnShelf} />

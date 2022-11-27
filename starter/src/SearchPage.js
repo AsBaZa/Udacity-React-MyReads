@@ -9,7 +9,7 @@ const SearchPage = ({ selectedBooks, handleOnShelf }) => {
   const handleSearchChange = (event) => {
     event.preventDefault();
     const text = event.target.value;
-    console.log(text);
+
     if (text.length >= 1) {
       BooksAPI.search(text, 20).then((response) => {
         const cleanResponse = response.map((r) => {
@@ -45,39 +45,42 @@ const SearchPage = ({ selectedBooks, handleOnShelf }) => {
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {searchedBooks
-            .filter((book) => book.imageLinks !== undefined)
-            .map((book) => {
-              return (
-                <li key={book.id}>
-                  <div className="book">
-                    <div className="book-top">
-                      {/* TODO: solucionar el ratio de la imagen */}
-                      <div
-                        className="book-cover"
-                        style={{
-                          width: 128,
-                          height: 188,
-                          backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
-                        }}
-                      ></div>
-                      <BookShelfChanger
-                        shelf={book.shelf === undefined ? "none" : book.shelf}
-                        book={book}
-                        onShelf={handleOnShelf}
-                      />
-                    </div>
-                    <div className="book-title">{book.title}</div>
-                    {Array.isArray(book.authors) &&
-                      book.authors.map((author) => (
-                        <div key={author} className="book-authors">
-                          {author}
-                        </div>
-                      ))}
+          {searchedBooks.map((book) => {
+            const backgroundImage =
+              book.imageLinks !== undefined
+                ? `url(${book.imageLinks.smallThumbnail})`
+                : "white";
+
+            return (
+              <li key={book.id}>
+                <div className="book">
+                  <div className="book-top">
+                    {/* TODO: solucionar el ratio de la imagen */}
+                    <div
+                      className="book-cover"
+                      style={{
+                        width: 128,
+                        height: 188,
+                        backgroundImage: backgroundImage,
+                      }}
+                    ></div>
+                    <BookShelfChanger
+                      shelf={book.shelf === undefined ? "none" : book.shelf}
+                      book={book}
+                      onShelf={handleOnShelf}
+                    />
                   </div>
-                </li>
-              );
-            })}
+                  <div className="book-title">{book.title}</div>
+                  {Array.isArray(book.authors) &&
+                    book.authors.map((author) => (
+                      <div key={author} className="book-authors">
+                        {author}
+                      </div>
+                    ))}
+                </div>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </div>
