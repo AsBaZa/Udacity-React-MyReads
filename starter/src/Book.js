@@ -1,7 +1,7 @@
 import BookShelfChanger from "./BookShelfChanger";
 
 const Book = ({ book, shelf, onShelf }) => {
-  const handleOnShelf = (shelf) => {
+  const handleOnShelf = (book, shelf) => {
     onShelf(book, shelf);
   };
 
@@ -18,7 +18,7 @@ const Book = ({ book, shelf, onShelf }) => {
               backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
             }}
           ></div>
-          <BookShelfChanger shelf={shelf} onShelf={handleOnShelf} />
+          <BookShelfChanger shelf={shelf} book={book} onShelf={handleOnShelf} />
         </div>
         <div className="book-title">{book.title}</div>
         {book.authors.map((author) => (

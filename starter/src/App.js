@@ -44,6 +44,31 @@ function App() {
     }
   };
 
+  const handleOnShelf = (book, shelf) => {
+    let newBook = true;
+    const newSelectedBooks = selectedBooks.map((selectedBook) => {
+      if (selectedBook.id !== book.id) {
+        return selectedBook;
+      } else {
+        newBook = false;
+        BooksAPI.update(selectedBook, shelf);
+        return {
+          ...selectedBook,
+          shelf: shelf,
+        };
+      }
+    });
+
+    setSelectedBooks(newSelectedBooks);
+
+    if (newBook){
+      BooksAPI.update(book, shelf);
+      setSelectedBooks(selectedBooks.concat({...book, shelf: shelf}));
+    }
+
+    
+  };
+
   return (
     <div className="app">
       {showSearchPage ? (
@@ -80,8 +105,9 @@ function App() {
                           }}
                         ></div>
                         <BookShelfChanger
-                          shelf={book.shelf}
-                          onShelf={() => {}}
+                          shelf={book.shelf === undefined ? 'none': book.shelf}
+                          book={book}
+                          onShelf={handleOnShelf}
                         />
                       </div>
                       <div className="book-title">{book.title}</div>
