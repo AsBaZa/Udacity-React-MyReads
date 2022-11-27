@@ -2,10 +2,12 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import BookShelf from "./BookShelf";
 import * as BooksAPI from "./BooksAPI";
+import BookShelfChanger from "./BookShelfChanger";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState([]);
+  const [searchedBooks, setSearchedBooks] = useState([]);
 
   useEffect(() => {
     const getSelectedBooks = async () => {
@@ -32,6 +34,18 @@ function App() {
     setSelectedBooks(newSelectedBooks);
   };
 
+  const handleSearchChange = (event) => {
+    event.preventDefault();
+    const text = event.target.value;
+    if (text.length >= 3) {
+      BooksAPI.search(text, 20).then((response) => {
+        // TODO: eliminar `console.log`
+        console.log(response);
+        response.length > 0 ? setSearchedBooks(response) : setSearchedBooks([]);
+      });
+    }
+  };
+
   return (
     <div className="app">
       {showSearchPage ? (
@@ -47,11 +61,44 @@ function App() {
               <input
                 type="text"
                 placeholder="Search by title, author, or ISBN"
+                onChange={handleSearchChange}
               />
             </div>
           </div>
           <div className="search-books-results">
-            <ol className="books-grid"></ol>
+            <ol className="books-grid">
+              {searchedBooks.map((book) => {
+                return (
+                  <li key={book.id}>
+                    <div className="book">
+                      <div className="book-top">
+                        {/* TODO: solucionar el ratio de la imagen */}
+                        <div
+                          className="book-cover"
+                          style={{
+                            width: 128,
+                            height: 188,
+                            backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
+                          }}
+                        ></div>
+                        {/* <BookShelfChanger shelf={book.shelf} onShelf={handleOnShelf} /> */}
+                      </div>
+                      <div className="book-title">{book.title}</div>
+                      {/* TODO: solucionar los `key` */}
+                      {Array.isArray(book.authors) &&
+                        book.authors.map((author) => (
+                          <div
+                            key={Math.random().toString(36)}
+                            className="book-authors"
+                          >
+                            {author}
+                          </div>
+                        ))}
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         </div>
       ) : (
