@@ -1,5 +1,7 @@
 # Udacity-React-MyReads Project
 
+[![repo-size](https://img.shields.io/github/repo-size/AsBaZa/Udacity-React-MyReads?style=for-the-badge&logo=appveyor)](https://img.shields.io/github/repo-size/AsBaZa/Udacity-React-MyReads?style=for-the-badge&logo=appveyor)
+
 This is a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. The project emphasizes using React to build the application and provides an API server and client library to persist information as you interact with the application.
 
 ## Getting Started
